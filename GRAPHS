@@ -1,0 +1,79 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the data
+file_path = 'cars.csv'  # Adjust the path as needed
+try:
+    cars_data = pd.read_csv(file_path)
+    print("Data successfully loaded!")
+except FileNotFoundError:
+    print("The file 'cars.csv' was not found. Please check the file path.")
+    exit()
+
+# Set global plot style
+sns.set_theme(style="whitegrid")
+
+# Visualization 1: Bar Chart - Number of Cars by Manufacturer
+plt.figure(figsize=(10, 6))
+manufacturer_counts = cars_data['Manufacturer'].value_counts()
+sns.barplot(x=manufacturer_counts.index, y=manufacturer_counts.values, palette="viridis")
+plt.title("Number of Cars by Manufacturer", fontsize=16)
+plt.xlabel("Manufacturer", fontsize=12)
+plt.ylabel("Number of Cars", fontsize=12)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+print("Bar Chart: This chart shows the number of cars available for each manufacturer.")
+
+# Visualization 2: Histogram - Distribution of Car Prices
+plt.figure(figsize=(10, 6))
+sns.histplot(cars_data['Price'], bins=20, kde=True, color='blue')
+plt.title("Distribution of Car Prices", fontsize=16)
+plt.xlabel("Price", fontsize=12)
+plt.ylabel("Frequency", fontsize=12)
+plt.tight_layout()
+plt.show()
+print("Histogram: This chart visualizes the distribution of car prices. The KDE curve indicates density trends.")
+
+# Visualization 3: Scatter Plot - Price vs. Mileage
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='Mileage', y='Price', hue='Manufacturer', data=cars_data, palette="tab10")
+plt.title("Price vs. Mileage", fontsize=16)
+plt.xlabel("Mileage", fontsize=12)
+plt.ylabel("Price", fontsize=12)
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', title="Manufacturer")
+plt.tight_layout()
+plt.show()
+print("Scatter Plot: This plot shows how car mileage correlates with price, grouped by manufacturer.")
+
+# Visualization 4: Box Plot - Prices by Manufacturer
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='Manufacturer', y='Price', data=cars_data, palette="coolwarm")
+plt.title("Car Prices by Manufacturer", fontsize=16)
+plt.xlabel("Manufacturer", fontsize=12)
+plt.ylabel("Price", fontsize=12)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+print("Box Plot: This plot shows the price ranges for each manufacturer, highlighting medians and outliers.")
+
+# Visualization 5: Pie Chart - Proportion of Fuel Types
+fuel_type_counts = cars_data['FuelType'].value_counts()
+plt.figure(figsize=(8, 8))
+fuel_type_counts.plot(kind='pie', autopct='%1.1f%%', colors=sns.color_palette("pastel"), startangle=140)
+plt.title("Proportion of Fuel Types", fontsize=16)
+plt.ylabel("")  # Hide y-axis label
+plt.tight_layout()
+plt.show()
+print("Pie Chart: This chart shows the percentage distribution of fuel types in the dataset.")
+
+# Visualization 6: Heatmap - Correlation Matrix
+plt.figure(figsize=(10, 8))
+correlation_matrix = cars_data.corr()
+sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", fmt=".2f", cbar=True)
+plt.title("Correlation Heatmap", fontsize=16)
+plt.tight_layout()
+plt.show()
+print("Heatmap: This chart highlights the correlation between numerical features in the dataset.")
+
