@@ -1,0 +1,28 @@
+import pandas as pd
+
+# Load the CSV file
+file_path = 'cars.csv'
+try:
+    cars_data = pd.read_csv(file_path)
+    print("Data successfully loaded!")
+
+    # Step 2: Display rows and columns
+    num_rows, num_columns = cars_data.shape
+    print(f"The dataset has {num_rows} rows and {num_columns} columns.")
+
+    # Step 3: Summary statistics
+    print("\nSummary Statistics:")
+    print(cars_data.describe())
+
+    # Calculate specific statistics
+    print("\nMean values:\n", cars_data.mean())
+    print("\nMedian values:\n", cars_data.median())
+    print("\nStandard Deviation values:\n", cars_data.std())
+
+    # Step 4: Percentile interpretations
+    percentiles = cars_data.describe(percentiles=[0.25, 0.75])
+    print("\n25th Percentile (Q1):\n", percentiles.loc["25%"])
+    print("\n75th Percentile (Q3):\n", percentiles.loc["75%"])
+
+except FileNotFoundError:
+    print("The file 'cars.csv' was not found. Please check the file path.")
